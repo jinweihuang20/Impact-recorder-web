@@ -1,8 +1,9 @@
 <template>
-  <div class="mb-3">
+  <div class="mb-3" :id="id + 'temp'">
     <div>
       <b-button class="mr-2" @click="syncToDarkTheme">Dark</b-button>
       <b-button class="mr-2" @click="syncToLightTheme">Light</b-button>
+      <b-button class="mr-2" @click="Resize"> 調整測試</b-button>
     </div>
     <div class="chart" :id="id"></div>
   </div>
@@ -14,9 +15,9 @@ export default {
   data() {
     return {
       chart: "",
+      chartContainer: "",
       themesData: {
         Dark: {
-          height: 100,
           layout: {
             backgroundColor: "#2B2B43",
             lineColor: "#2B2B43",
@@ -68,9 +69,15 @@ export default {
     syncToLightTheme() {
       this.chart.applyOptions(this.themesData.Light);
     },
+    Resize() {},
   },
   mounted() {
-    this.chart = createChart(this.id, { width: window.width, height: 400 });
+    if (!this.id) return;
+    this.chartContainer = document.getElementById(this.id + "temp");
+    this.chart = createChart(this.id, {
+      height: 400,
+    });
+
     const lineSeries = this.chart.addLineSeries({
       topColor: "rgba(32, 226, 47, 0.56)",
       bottomColor: "rgba(32, 226, 47, 0.04)",
@@ -78,7 +85,8 @@ export default {
     });
 
     this.syncToDarkTheme();
-
+    this.Resize();
+    /**模擬 */
     setInterval(() => {
       var random = Math.random();
       lineSeries.update({ time: Date.now(), value: random });

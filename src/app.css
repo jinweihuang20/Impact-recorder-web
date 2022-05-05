@@ -1,0 +1,24 @@
+
+.info-card:hover{
+    border:1px rgb(33, 150, 243) solid;
+    border-radius: 10px;
+}
+
+.info-card-sub-card{
+    height: 250px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.info-card-sub-card:hover{
+    border:1px rgb(33, 150, 243) solid;
+    cursor: pointer;
+}
+
+h4 {
+    text-align: left;
+    color: #2196f3;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 17px;
+  }

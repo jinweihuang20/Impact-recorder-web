@@ -1,6 +1,6 @@
 var _navStyle = "info"
 var configs = {
-    navTitle: "ENV-MONITOR",
+    navTitle: "碰撞偵測系統",
     get navStyle() {
         var navStyle = localStorage.getItem('style')
         if (navStyle == null) {

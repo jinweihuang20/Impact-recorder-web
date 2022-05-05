@@ -1,49 +1,102 @@
 <template>
   <div class="home">
-    <TradeChart id="cr1"></TradeChart>
-    <TradeChart id="cr2"></TradeChart>
+    <span :key="reunderkey"></span>
 
-    <LineChart :Series="SeriesData"></LineChart>
-    <div id="light-chart" class="chart pl-5"></div>
-    <img v-dummy="'400x300'" />
-    <!-- Note: the quotes to pass the expression as a string -->
-    <img v-dummy.400x300 /><!-- or, as a Vue modifier -->
-
-    <TradeChart></TradeChart>
+    <info-card
+      v-for="(value, key) in connectedIPList"
+      :key="key"
+      :dataSet="value"
+    >
+      <div>value</div>
+    </info-card>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import LineChart from "../components/Chart/lineChart.vue";
-import TradeChart from "../components/Chart/TradingChart.vue";
-import { Series } from "../components/Chart/ChartViewModel";
-
+import infoCard from "../components/InfoCard/InfoCard.vue";
 export default {
   name: "Home",
   components: {
-    LineChart,
-    TradeChart,
+    infoCard,
   },
   data() {
     return {
-      SeriesData: [
-        new Series("rts", []),
-        new Series("rts2", []),
-        new Series("rts3", []),
-      ],
+      ws: null,
+      connectedIPList: {
+        "127.0.0.1": {
+          sensorIP: "127.123.132.221",
+          eqName: "EQ1",
+          unitName: "Unit1",
+          toDayHitNumber: 12,
+          vibEngX: 1.23,
+          vibEngY: 1.23,
+          vibEngZ: 1.23999,
+          isPLCConnected: true,
+          isRunning: true,
+          eventData: {
+            Events: [
+              {
+                EventTime: Date.now(),
+                EventType: "eventType",
+                ValueRec: 12.23,
+                Level: 1,
+                Content: "This is content",
+                XAxisEvent: 0,
+                YAxisEvent: 0,
+                ZAxisEvent: 0,
+                XValue: 32,
+                YValue: 22,
+                ZValue: 12,
+              },
+              {
+                EventTime: Date.now(),
+                EventType: "eventType",
+                ValueRec: 12.23,
+                Level: 2,
+                Content: "This is content 2",
+                XAxisEvent: 0,
+                YAxisEvent: 0,
+                ZAxisEvent: 0,
+                XValue: 32,
+                YValue: 22,
+                ZValue: 12,
+              },
+            ],
+          },
+        },
+      },
+      reunderkey: 1,
     };
   },
+  methods: {
+    wsConnect() {
+      let ws = new WebSocket(
+        "wss://localhost:5001/api/WebSockets/Recorder/EQStatus"
+      );
+      ws.onopen = (e) => {
+        console.log(e, "ok");
+      };
+      ws.onmessage = (msg) => {
+        var dataObj = JSON.parse(msg.data);
+        var ip = dataObj.sensorIP;
+        // console.log(dataObj);
+        this.connectedIPList[ip] = dataObj;
+
+        //sort
+
+        this.reunderkey = Date.now();
+      };
+    },
+  },
   mounted() {
-    // setInterval(() => {
-    //   var random = Math.random();
-    //   this.SeriesData[0].Append(random * 1);
-    //   this.SeriesData[1].Append(random * 2);
-    //   this.SeriesData[2].Append(random * 3);
-    // }, 100);
+    this.wsConnect();
   },
 };
 </script>
 
 <style>
+.home {
+  height: 100vh;
+  background-color: black;
+}
 </style>

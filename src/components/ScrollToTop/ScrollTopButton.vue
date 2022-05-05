@@ -1,7 +1,14 @@
 <template>
   <div v-if="show" class="scroll-to-top">
     <div class="h2 mb-0">
-      <b-icon id="scroll-top-btn" class="rounded-circle" icon="chevron-up" variant="dark" @click="ScrollToTop"></b-icon>
+      <b-icon
+        id="scroll-top-btn"
+        class="rounded-circle"
+        icon="chevron-up"
+        variant="light"
+        style="height: 60px; width: 60px"
+        @click="ScrollToTop"
+      ></b-icon>
     </div>
   </div>
 </template>
@@ -23,7 +30,7 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", () => {
-      this.show = window.scrollY > 100;
+      this.show = window.scrollY > 30;
     });
   },
 };
@@ -34,16 +41,19 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  z-index: 232323;
 }
 
 #scroll-top-btn {
   cursor: pointer;
   padding: 5px;
-  background-color: rgb(110, 110, 110);
+  background-color: rgb(42, 123, 214);
+  color: white;
+  opacity: 0.7;
 }
 
 #scroll-top-btn:hover {
   cursor: pointer;
-  background-color: rgb(153, 153, 153);
+  opacity: 1;
 }
 </style>

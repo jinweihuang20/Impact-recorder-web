@@ -29,7 +29,7 @@ export default {
     return {
       get Options() {
         let opt = new Options("line");
-        opt.title.text = "Area Chart Demo";
+        opt.title.text = this.Title;
         opt.xaxis.title.text = "Index";
         opt.yaxis.title.text = "Value";
         return opt;

@@ -2,7 +2,7 @@
   <div id="app">
     <Nav></Nav>
     <ScrollToTopButton> </ScrollToTopButton>
-    <div class="mt-5 pt-4">
+    <div class="mt-5 pt-1">
       <keep-alive>
         <router-view />
       </keep-alive>
