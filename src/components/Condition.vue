@@ -115,8 +115,8 @@ export default {
 #query-button {
   background-color: rgb(33, 150, 243);
   font-size: x-large;
-  height: 60px;
-  border-radius: 33px;
+  height: 45px;
+  border-radius: 3px;
   margin: 14px;
 }
 #query-button:hover {
