@@ -33,6 +33,10 @@ export default {
   height: 100%;
 }
 
+body {
+  background-color: black;
+  height: 100%;
+}
 .selector-for-some-widget {
   box-sizing: content-box;
 }

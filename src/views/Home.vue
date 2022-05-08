@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <span :key="reunderkey"></span>
-
     <info-card
-      v-for="(value, key) in connectedIPList"
-      :key="key"
-      :dataSet="value"
+      v-for="item in connectedIPList"
+      :key="item.sensorIP"
+      :ref="item.sensorIP"
+      :dataSet="item"
     >
       <div>value</div>
     </info-card>
@@ -22,69 +22,45 @@ export default {
   data() {
     return {
       ws: null,
-      connectedIPList: {
-        "127.0.0.1": {
-          sensorIP: "127.123.132.221",
-          eqName: "EQ1",
-          unitName: "Unit1",
-          toDayHitNumber: 12,
-          vibEngX: 1.23,
-          vibEngY: 1.23,
-          vibEngZ: 1.23999,
-          isPLCConnected: true,
-          isRunning: true,
-          eventData: {
-            Events: [
-              {
-                EventTime: Date.now(),
-                EventType: "eventType",
-                ValueRec: 12.23,
-                Level: 1,
-                Content: "This is content",
-                XAxisEvent: 0,
-                YAxisEvent: 0,
-                ZAxisEvent: 0,
-                XValue: 32,
-                YValue: 22,
-                ZValue: 12,
-              },
-              {
-                EventTime: Date.now(),
-                EventType: "eventType",
-                ValueRec: 12.23,
-                Level: 2,
-                Content: "This is content 2",
-                XAxisEvent: 0,
-                YAxisEvent: 0,
-                ZAxisEvent: 0,
-                XValue: 32,
-                YValue: 22,
-                ZValue: 12,
-              },
-            ],
-          },
-        },
-      },
+      connectedIPList: [],
       reunderkey: 1,
     };
   },
   methods: {
     wsConnect() {
-      let ws = new WebSocket(
-        "wss://localhost:5001/api/WebSockets/Recorder/EQStatus"
-      );
+      var Host =
+        process.env.NODE_ENV === "production"
+          ? window.location.protocol + "//" + window.location.host
+          : "https://192.168.0.201:5001";
+      var wsRoute = `${Host.replace(
+        "http",
+        "ws"
+      )}/api/WebSockets/Recorder/EQStatus`;
+      console.log("websocket api:", wsRoute);
+      let ws = new WebSocket(wsRoute);
       ws.onopen = (e) => {
         console.log(e, "ok");
+      };
+      ws.onclose = () => {
+        console.log("ws closed");
       };
       ws.onmessage = (msg) => {
         var dataObj = JSON.parse(msg.data);
         var ip = dataObj.sensorIP;
-        // console.log(dataObj);
-        this.connectedIPList[ip] = dataObj;
-
-        //sort
-
-        this.reunderkey = Date.now();
+        var index = this.connectedIPList.findIndex(
+          (item) => item.sensorIP == ip
+        );
+        if (index == -1) {
+          this.connectedIPList.push(dataObj);
+          this.reunderkey = Date.now();
+        } else {
+          this.connectedIPList[index] = dataObj;
+        }
+        this.connectedIPList.forEach((element) => {
+          var ip = element.sensorIP;
+          var refs = this.$refs[ip];
+          if (refs != undefined) refs[0].dataSet = element;
+        });
       };
     },
   },
@@ -96,7 +72,7 @@ export default {
 
 <style>
 .home {
-  height: 100vh;
+  height: 100%;
   background-color: black;
 }
 </style>

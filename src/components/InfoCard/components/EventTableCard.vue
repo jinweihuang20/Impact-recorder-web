@@ -103,16 +103,13 @@ export default {
   },
   watch: {
     tableData: {
-      handler: function (n, o) {
-        console.log(n, o);
+      handler: function (n) {
         if (n != undefined) {
           this.tableData.forEach((element) => {
             element.EventTime_Formated = this.$moment(element.EventTime).format(
               "YY-MM-DD HH:mm:ss"
             );
           });
-
-          console.log("QQ", this.tableData);
         }
       },
       deep: true,

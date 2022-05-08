@@ -24,15 +24,9 @@
               </div>
             </b-row>
           </b-col>
-          <b-col cols="10"
-            ><div style="margin-top: 8px; width: auto; height: 170px">
-              <apexchart
-                :key="options.xaxis.categories"
-                ref="chart"
-                height="100%"
-                :options="options"
-                :series="chartSeries"
-              ></apexchart></div
+          <b-col class="text-left" cols="10"
+            ><div style="margin-top: 8px; width: 100%; height: 170px">
+              <chart :dataList="dataSet.chartData.trendDataList"></chart></div
           ></b-col>
         </b-row>
       </div>
@@ -41,8 +35,9 @@
 </template>
 
 <script>
+import chart from "../../Chart/lineChartJs.vue";
 export default {
-  components: {},
+  components: { chart },
   data() {
     return {
       options: {
@@ -108,28 +103,6 @@ export default {
   },
   props: {
     dataSet: Object,
-  },
-  watch: {
-    dataSet: {
-      deep: true,
-      handler: function (newVal) {
-        if (newVal.chartData) {
-          var timeLabels = [];
-          newVal.chartData.dateTimes.forEach((element) => {
-            timeLabels.push(this.$moment(element).format("mm:ss"));
-          });
-          this.options.xaxis.categories = timeLabels;
-          console.log(this.options.xaxis);
-        }
-      },
-    },
-  },
-  computed: {
-    chartSeries: function () {
-      if (this.dataSet.chartData) {
-        return this.dataSet.chartData.VibEngSeriesList;
-      } else return this.series;
-    },
   },
 
   mounted() {},

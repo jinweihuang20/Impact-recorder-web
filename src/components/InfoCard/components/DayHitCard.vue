@@ -1,6 +1,14 @@
 <template>
   <b-card class="day-hit-card info-card-sub-card" bg-variant="dark">
-    <h4>DAY HIT</h4>
+    <b-row>
+      <b-col>
+        <h4>DAY HIT</h4>
+      </b-col>
+      <b-col class="text-right">
+        <span class="reset-text" @click="ResetClickHandle">RESET</span>
+      </b-col>
+    </b-row>
+
     <b-container>
       <div class="progress-bar-container">
         <el-progress
@@ -14,12 +22,14 @@
 </template>
 
 <script>
+import { Setting } from "../../../API/Http";
 export default {
   props: {
     hitNum: {
       type: Number,
       default: 0,
     },
+    sensorIP: String,
   },
   computed: {
     HitNUM() {
@@ -30,6 +40,10 @@ export default {
     format(value) {
       return value + "次";
     },
+
+    ResetClickHandle() {
+      Setting.ResetHitNumToday(this.sensorIP);
+    },
   },
 };
 </script>
@@ -38,5 +52,13 @@ export default {
 .progress-bar-container {
   margin-top: 20px;
   color: white;
+}
+
+.reset-text {
+  color: rgb(197, 197, 197);
+}
+
+.reset-text:hover {
+  color: rgb(1, 197, 197);
 }
 </style>
