@@ -8,17 +8,17 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: '主頁',
     component: Home
   },
   {
     path: '/Query',
-    name: 'Query',
+    name: '資料查詢',
     component: Query
   },
   {
-    path: '/about',
-    name: 'About',
+    path: '/Setting',
+    name: '設定',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
