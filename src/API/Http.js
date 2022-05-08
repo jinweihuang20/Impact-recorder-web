@@ -60,6 +60,10 @@ export class Query{
           return 'error'
       });
     }
+
+    static async GetCsvFile(key){
+        return getBaseURL()+"/"+ (await (backendServiceRequest.get(`api/Query/GetCsvFile/${key}`))).data;
+    }
 }
 
 /**Post方法 

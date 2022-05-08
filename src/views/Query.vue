@@ -35,7 +35,11 @@
                 "
                 >清除</el-button
               >
-              <el-button :disabled="tableData.length == 0" size="small" type=""
+              <el-button
+                :disabled="tableData.length == 0"
+                @click="ExportCSVButtonClickHandle"
+                size="small"
+                type=""
                 >匯出CSV</el-button
               >
             </b-col>
@@ -55,77 +59,81 @@
               </div>
             </b-col>
           </b-row>
-
-          <el-table
-            :key="tableData"
-            :data="pageData"
-            :header-cell-style="headStyle"
-            :cell-style="cellStyle"
-            :row-style="rowStyle"
-            max-height="800"
-            empty-text="沒有資料"
-          >
-            <el-table-column
-              prop="Time"
-              label="TIME"
-              :formatter="timeformat"
-              sortable=""
-              width="150"
-            ></el-table-column>
-            <el-table-column
-              prop="IP"
-              sortable=""
-              label="IP"
-              width="128"
-            ></el-table-column>
-            <el-table-column prop="Location" label="Location"></el-table-column>
-            <el-table-column prop="Event" label="Event"></el-table-column>
-            <el-table-column
-              prop="AxisAlarmStateXAxis"
-              label="X軸碰撞"
-              width="75"
-              align="center"
-              :formatter="AxisStateValFormat"
-            ></el-table-column>
-            <el-table-column
-              prop="AxisAlarmStateYAxis"
-              label="Y軸碰撞"
-              align="center"
-              width="75"
-              :formatter="AxisStateValFormat"
-            ></el-table-column>
-            <el-table-column
-              prop="AxisAlarmStateZAxis"
-              label="Z軸碰撞"
-              width="75"
-              align="center"
-              :formatter="AxisStateValFormat"
-            ></el-table-column>
-            <el-table-column
-              prop="FeatureXAxis"
-              label="X軸能量值"
-              align="center"
-              :formatter="EngValFormat"
-            ></el-table-column>
-            <el-table-column
-              prop="FeatureYAxis"
-              label="Y軸能量值"
-              align="center"
-              :formatter="EngValFormat"
-            ></el-table-column>
-            <el-table-column
-              prop="FeatureZAxis"
-              label="Z軸能量值"
-              align="center"
-              :formatter="EngValFormat"
-            ></el-table-column>
-            <el-table-column
-              prop="Level"
-              label="Level"
-              align="center"
-              sortable=""
-            ></el-table-column>
-          </el-table>
+          <div class="table-border">
+            <el-table
+              :key="tableData"
+              :data="pageData"
+              :header-cell-style="headStyle"
+              :cell-style="cellStyle"
+              :row-style="rowStyle"
+              max-height="800"
+              empty-text="沒有資料"
+            >
+              <el-table-column
+                prop="Time"
+                label="TIME"
+                :formatter="timeformat"
+                sortable=""
+                width="150"
+              ></el-table-column>
+              <el-table-column
+                prop="IP"
+                sortable=""
+                label="IP"
+                width="128"
+              ></el-table-column>
+              <el-table-column
+                prop="Location"
+                label="Location"
+              ></el-table-column>
+              <el-table-column prop="Event" label="Event"></el-table-column>
+              <el-table-column
+                prop="AxisAlarmStateXAxis"
+                label="X軸碰撞"
+                width="75"
+                align="center"
+                :formatter="AxisStateValFormat"
+              ></el-table-column>
+              <el-table-column
+                prop="AxisAlarmStateYAxis"
+                label="Y軸碰撞"
+                align="center"
+                width="75"
+                :formatter="AxisStateValFormat"
+              ></el-table-column>
+              <el-table-column
+                prop="AxisAlarmStateZAxis"
+                label="Z軸碰撞"
+                width="75"
+                align="center"
+                :formatter="AxisStateValFormat"
+              ></el-table-column>
+              <el-table-column
+                prop="FeatureXAxis"
+                label="X軸能量值"
+                align="center"
+                :formatter="EngValFormat"
+              ></el-table-column>
+              <el-table-column
+                prop="FeatureYAxis"
+                label="Y軸能量值"
+                align="center"
+                :formatter="EngValFormat"
+              ></el-table-column>
+              <el-table-column
+                prop="FeatureZAxis"
+                label="Z軸能量值"
+                align="center"
+                :formatter="EngValFormat"
+              ></el-table-column>
+              <el-table-column
+                prop="Level"
+                label="Level"
+                align="center"
+                sortable=""
+              ></el-table-column>
+            </el-table>
+          </div>
         </div>
       </b-col>
     </b-row>
@@ -160,6 +168,8 @@ export default {
         backgroundColor: "rgb(3,3,32)",
         color: "white",
       },
+      /**key for csv export */
+      querykey: -1,
     };
   },
   computed: {
@@ -173,15 +183,19 @@ export default {
   },
   methods: {
     async QueryBtnClickHandler(condition) {
+      condition.key = this.querykey;
       this.isLoading = true;
-      Query.QueryData(condition).then((data) => {
-        this.isLoading = false;
-        if (data != "error") {
-          this.currentPage = 1;
-          this.tableData = data;
-          this.SplitPageData();
-        }
-      });
+      setTimeout(() => {
+        //延後500毫秒才開始做事，讓loading畫面跑一下 比較有感
+        Query.QueryData(condition).then((data) => {
+          this.isLoading = false;
+          if (data != "error") {
+            this.currentPage = 1;
+            this.tableData = data;
+            this.SplitPageData();
+          }
+        });
+      }, 500);
     },
     /**產生分頁 */
     SplitPageData() {
@@ -211,6 +225,16 @@ export default {
     AxisStateValFormat(row, column, cellValue, index) {
       return cellValue ? "V" : "-";
     },
+
+    async ExportCSVButtonClickHandle() {
+      var path = await Query.GetCsvFile(this.querykey);
+      console.info(path);
+      window.open(path);
+    },
+  },
+
+  mounted() {
+    this.querykey = Date.now();
   },
 };
 </script>
@@ -227,5 +251,9 @@ export default {
   padding: 3px 20px;
   border: 1px solid grey;
   border-radius: 6px;
+}
+
+.table-border {
+  border: 1px solid #bebebe;
 }
 </style>
