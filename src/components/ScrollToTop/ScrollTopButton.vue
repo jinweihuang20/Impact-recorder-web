@@ -49,11 +49,11 @@ export default {
   padding: 5px;
   background-color: rgb(42, 123, 214);
   color: white;
-  opacity: 0.7;
+  opacity: 0.15;
 }
 
 #scroll-top-btn:hover {
   cursor: pointer;
-  opacity: 1;
+  opacity: 0.5;
 }
 </style>

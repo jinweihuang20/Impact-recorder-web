@@ -58,6 +58,7 @@ export default {
 
 <style>
 .progress-bar-container {
+  z-index: 1;
   width: 100%;
   position: relative;
   bottom: 30px;

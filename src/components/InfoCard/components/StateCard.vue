@@ -4,9 +4,7 @@
     class="state-card info-card-sub-card"
     bg-variant="dark"
   >
-    <b-row>
-      <h4>設備資訊</h4>
-    </b-row>
+    <h4>設備資訊</h4>
 
     <div>
       <b-row class="mb-2">
@@ -18,18 +16,18 @@
         }}</b-col>
       </b-row>
       <b-row class="mb-2">
-        <b-col cols="6" class="text-left">
+        <b-col cols="5" class="text-left">
           <b-icon-list-check></b-icon-list-check> 監控部位</b-col
         >
-        <b-col cols="6"
-          >{{ dataSet.unitName }}
+        <b-col cols="7">
           <b-icon-pencil-square
             class="edit-icon"
             v-show="isMouseEnter"
             v-b-modal="EditModelID"
           >
-          </b-icon-pencil-square
-        ></b-col>
+          </b-icon-pencil-square>
+          {{ dataSet.unitName }}
+        </b-col>
       </b-row>
 
       <b-row class="mb-2">
@@ -87,6 +85,7 @@
 </template>
 
 <script>
+import { Setting } from "../../../API/Http";
 export default {
   props: {
     dataSet: {
@@ -121,19 +120,24 @@ export default {
     EditModelID() {
       return "edit-modal-" + this.dataSet.sensorIP;
     },
+    ModuleInstallProp() {
+      return {
+        IP: this.dataSet.sensorIP,
+        eqName: this.form.eqName == "" ? this.dataSet.eqName : this.form.eqName,
+        unitName:
+          this.form.unitName == "" ? this.dataSet.unitName : this.form.unitName,
+      };
+    },
   },
   methods: {
     SensorIPClickHandle() {
       // alert("open website of sensor ");
       window.open(`http://${this.dataSet.sensorIP}`);
     },
-    SubmitEditResult(bvModalEvent) {
+    async SubmitEditResult(bvModalEvent) {
       this.IsBackendReply = false;
-      bvModalEvent.preventDefault();
-
-      setTimeout(() => {
-        this.IsBackendReply = true;
-      }, 3000);
+      await Setting.ModifyEqUnitName(this.ModuleInstallProp);
+      this.IsBackendReply = true;
     },
     EditModalCloseHandle() {
       this.form = { eqName: "", unitName: "" };

@@ -10,10 +10,10 @@
     border-radius: 3px;
 }
 
-.info-card-sub-card:hover{
+/* .info-card-sub-card:hover{
     border:1px rgb(33, 150, 243) solid;
     cursor: pointer;
-}
+} */
 
 .page{
     padding-top: 20px;

@@ -67,11 +67,11 @@ export default {
     addFakeData(number) {
       console.log("add fake", number);
       for (let index = 0; index < number; index++) {
-        var ip = `192.168.0.${index + 1}`;
+        var ip = `192.168.0.6${index + 8}`;
         const element = {
           sensorIP: ip,
           eqName: "EQ1",
-          unitName: "Unit1",
+          unitName: "UnHJHJJHit1",
           vibEngX: 1.23,
           vibEngY: 1.23,
           vibEngZ: 1.23999,

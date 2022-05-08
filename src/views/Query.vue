@@ -7,12 +7,12 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
   >
     <b-row class="mt-3">
-      <b-col cols="3" class="text-left w-100">
+      <b-col lg="3" class="text-left w-100">
         <condition-selector
           @onQueryButtonClick="QueryBtnClickHandler"
         ></condition-selector>
       </b-col>
-      <b-col cols="9" class="text-center">
+      <b-col lg="9" class="text-center">
         <div class="result-container">
           <b-row>
             <b-col><h3 class="text-left mt-2 mb-4">查詢結果</h3> </b-col>
@@ -25,8 +25,31 @@
               >
             </b-col>
           </b-row>
+          <b-row no-gutters>
+            <b-col cols="2" class="text-center pt-1"
+              >共 {{ totalItemNum }} 筆</b-col
+            >
+            <b-col cols="9" class="text-left">
+              <!-- 分頁 -->
+              <div class="block text-left mb-3" style="color: white">
+                <el-pagination
+                  :current-page.sync="currentPage"
+                  :page-size="pageItemNum"
+                  :pager-count="11"
+                  layout="prev, pager, next"
+                  :total="totalItemNum"
+                >
+                </el-pagination>
+              </div>
+            </b-col>
+          </b-row>
 
-          <el-table :data="tableData" max-height="750" empty-text="沒有資料">
+          <el-table
+            :key="tableData"
+            :data="pageData"
+            max-height="800"
+            empty-text="沒有資料"
+          >
             <el-table-column
               prop="Time"
               label="TIME"
@@ -103,6 +126,9 @@ export default {
   data() {
     return {
       isLoading: false,
+      currentPage: 0,
+      pageItemNum: 20, //每一頁顯示的資料筆數
+      pageDataMap: {},
       tableData:
         env.NODE_PROCESS == "prodution"
           ? []
@@ -120,14 +146,45 @@ export default {
             ],
     };
   },
+  computed: {
+    totalItemNum() {
+      return this.tableData.length;
+    },
+    pageData() {
+      if (this.pageDataMap.length == 0) return [];
+      return this.pageDataMap[this.currentPage];
+    },
+  },
   methods: {
     async QueryBtnClickHandler(condition) {
       this.isLoading = true;
       Query.QueryData(condition).then((data) => {
         this.isLoading = false;
-        console.log("rs", data);
-        if (data != "error") this.tableData = data;
+        if (data != "error") {
+          this.currentPage = 1;
+          this.tableData = data;
+          this.SplitPageData();
+        }
       });
+    },
+    /**產生分頁 */
+    SplitPageData() {
+      this.pageDataMap = {};
+      this.currentPage = 2;
+      var pageIndex = 1;
+      for (
+        let index = 0;
+        index < this.tableData.length;
+        index += this.pageItemNum
+      ) {
+        let pageDatLs = [];
+        for (let i = index; i < index + this.pageItemNum; i++) {
+          pageDatLs.push(this.tableData[i]);
+        }
+        this.pageDataMap[pageIndex] = pageDatLs;
+        pageIndex += 1;
+      }
+      this.currentPage = 1;
     },
     timeformat(row = -1, column, cellValue, index) {
       return this.$moment(cellValue).format("yyyy-MM-DD HH:mm:ss");

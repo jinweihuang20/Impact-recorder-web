@@ -13,19 +13,19 @@
     </div>
     <b-container fluid="auto">
       <b-row class="text-center">
-        <b-col cols="2"><state-card :dataSet="dataSet"> </state-card></b-col>
-        <b-col cols="2"
+        <b-col md="2"><state-card :dataSet="dataSet"> </state-card></b-col>
+        <b-col md="2"
           ><day-hit-card
             :sensorIP="dataSet.sensorIP"
             :hitNum="dataSet.eventData.ToDayHit"
           >
           </day-hit-card
         ></b-col>
-        <b-col cols="4"
+        <b-col md="4"
           ><event-table-card :tableData="dataSet.eventData.Events">
           </event-table-card
         ></b-col>
-        <b-col cols="4">
+        <b-col md="4">
           <vib-energy-card :dataSet="dataSet"> </vib-energy-card
         ></b-col>
       </b-row>
@@ -61,77 +61,74 @@
           </b-button>
         </b-card-header>
         <el-divider></el-divider>
-        <b-card-body>
-          <div class="mb-5">
-            <h3>閥值設定</h3>
-            <b-row>
-              <b-col cols="3" class="pt-3 ml-2"> X軸閥值</b-col>
-              <b-col class="pt-2 ml-3 mr-2">
-                <el-slider
-                  :disabled="waitForSettingDone"
-                  :max="100"
-                  :show-input="true"
-                  :step="0.01"
-                  v-model="moduleSettings.thresHold_X"
-                ></el-slider>
-              </b-col> </b-row
-            ><b-row>
-              <b-col cols="3" class="pt-3 ml-2"> Y軸閥值</b-col>
-              <b-col class="pt-2 ml-3 mr-2">
-                <el-slider
-                  :disabled="waitForSettingDone"
-                  :max="100"
-                  :show-input="true"
-                  :step="0.01"
-                  v-model="moduleSettings.thresHold_Y"
-                ></el-slider>
-              </b-col> </b-row
-            ><b-row>
-              <b-col cols="3" class="pt-3 ml-2"> Z軸閥值</b-col>
-              <b-col class="pt-2 ml-3 mr-2">
-                <el-slider
-                  :disabled="waitForSettingDone"
-                  :max="100"
-                  :show-input="true"
-                  :step="0.01"
-                  v-model="moduleSettings.thresHold_Z"
-                ></el-slider>
-              </b-col>
-            </b-row>
-          </div>
-          <div>
-            <h3>模組設定</h3>
-            <b-row>
-              <b-col cols="3" class="pt-3 ml-2"> 量測範圍 </b-col>
-              <b-col>
-                <b-dropdown
-                  :disabled="waitForSettingDone"
-                  block
-                  variant="outline-light"
-                  id="dropdown-1"
-                  :text="moduleSettings.selectedRange + 'G'"
-                  class="m-md-2 z-index-123123"
-                  menu-class="w-100"
+        <div class="mb-5" style="z-index: 12344222">
+          <h3>閥值設定</h3>
+          <b-row>
+            <b-col cols="3" class="pt-3 ml-2"> X軸閥值</b-col>
+            <b-col class="pt-2 ml-3 mr-2">
+              <el-slider
+                :disabled="waitForSettingDone"
+                :max="100"
+                :show-input="true"
+                :step="0.01"
+                v-model="moduleSettings.thresHold_X"
+              ></el-slider>
+            </b-col> </b-row
+          ><b-row>
+            <b-col cols="3" class="pt-3 ml-2"> Y軸閥值</b-col>
+            <b-col class="pt-2 ml-3 mr-2">
+              <el-slider
+                :disabled="waitForSettingDone"
+                :max="100"
+                :show-input="true"
+                :step="0.01"
+                v-model="moduleSettings.thresHold_Y"
+              ></el-slider>
+            </b-col> </b-row
+          ><b-row>
+            <b-col cols="3" class="pt-3 ml-2"> Z軸閥值</b-col>
+            <b-col class="pt-2 ml-3 mr-2">
+              <el-slider
+                :disabled="waitForSettingDone"
+                :max="100"
+                :show-input="true"
+                :step="0.01"
+                v-model="moduleSettings.thresHold_Z"
+              ></el-slider>
+            </b-col>
+          </b-row>
+        </div>
+        <div>
+          <h3>模組設定</h3>
+          <b-row>
+            <b-col cols="3" class="pt-3 ml-2"> 量測範圍 </b-col>
+            <b-col>
+              <b-dropdown
+                :disabled="waitForSettingDone"
+                block
+                variant="outline-light"
+                id="dropdown-1"
+                :text="moduleSettings.selectedRange + 'G'"
+                class="m-md-2 z-index-123123"
+                menu-class="w-100"
+              >
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(2)"
+                  >2G</b-dropdown-item
                 >
-                  <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(2)"
-                    >2G</b-dropdown-item
-                  >
-                  <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(4)"
-                    >4G</b-dropdown-item
-                  >
-                  <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(8)"
-                    >8G</b-dropdown-item
-                  >
-                  <b-dropdown-item
-                    @click="MeasureRangeSelectedChangeHandler(16)"
-                    >16G</b-dropdown-item
-                  >
-                  <b-dropdown-divider></b-dropdown-divider>
-                </b-dropdown>
-              </b-col>
-            </b-row>
-          </div>
-        </b-card-body>
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(4)"
+                  >4G</b-dropdown-item
+                >
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(8)"
+                  >8G</b-dropdown-item
+                >
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(16)"
+                  >16G</b-dropdown-item
+                >
+                <b-dropdown-divider></b-dropdown-divider>
+              </b-dropdown>
+            </b-col>
+          </b-row>
+        </div>
       </b-card>
     </el-drawer>
   </div>
