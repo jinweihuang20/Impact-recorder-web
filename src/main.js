@@ -14,7 +14,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment';
 import Trend from 'vuetrend';
-
+ 
 import './app.css';
 
 Vue.use(Trend);
