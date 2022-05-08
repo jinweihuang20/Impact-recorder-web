@@ -2,7 +2,7 @@
   <div id="app">
     <Nav></Nav>
     <ScrollToTopButton> </ScrollToTopButton>
-    <div class="mt-5 pt-1">
+    <div class="" style=" height:100%;margin-top: 60px; background-color: transparent;">
       <keep-alive>
         <router-view />
       </keep-alive>
@@ -28,15 +28,18 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #2c3e50;
-  color: white;
+
+  color:white;
+  margin:0;
   height: 100%;
 }
 
-body {
-  background-color: black;
+html{
+    background-color: black;
+  margin:0;
   height: 100%;
 }
+
 .selector-for-some-widget {
   box-sizing: content-box;
 }

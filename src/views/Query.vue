@@ -96,30 +96,36 @@
 <script>
 import ConditionSelector from "../components/Condition.vue";
 import { Query } from "../API/Http";
+import { env } from "process";
 export default {
   components: { ConditionSelector },
   data() {
     return {
       isLoading: false,
-      tableData: [
-        {
-          Time: "2022-05-06T10:11:40",
-          Location: "SP",
-          IP: "123.123.123.123",
-          FeatureXAxis: 0,
-          FeatureYAxis: 0,
-          FeatureZAxis: 0,
-          Level: 1,
-        },
-      ],
+      tableData:
+        env.NODE_PROCESS == "prodution"
+          ? []
+          : [
+              {
+                Time: "2022-05-06T10:11:40",
+                Event: "This is fake",
+                Location: "SP",
+                IP: "123.123.123.123",
+                FeatureXAxis: 0,
+                FeatureYAxis: 0,
+                FeatureZAxis: 0,
+                Level: 1,
+              },
+            ],
     };
   },
   methods: {
     async QueryBtnClickHandler(condition) {
       this.isLoading = true;
       Query.QueryData(condition).then((data) => {
-        this.tableData = data;
         this.isLoading = false;
+        console.log("rs", data);
+        if (data != "error") this.tableData = data;
       });
     },
     timeformat(row = -1, column, cellValue, index) {
@@ -138,6 +144,7 @@ export default {
 <style>
 .query-page {
   height: 100%;
+  background-color: black;
 }
 
 .result-container {

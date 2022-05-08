@@ -1,10 +1,10 @@
 <template>
   <b-card class="day-hit-card info-card-sub-card" bg-variant="dark">
     <b-row>
-      <b-col>
+      <b-col cols="8" class="text-left">
         <h4>DAY HIT</h4>
       </b-col>
-      <b-col class="text-right">
+      <b-col  cols="4" class="text-center">
         <span class="reset-text" @click="ResetClickHandle">RESET</span>
       </b-col>
     </b-row>

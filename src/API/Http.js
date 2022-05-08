@@ -12,7 +12,7 @@ var backendServiceRequest = axios.create(
 );
 
 function getBaseURL(){
-    return process.env.NODE_ENV ==="production" ? window.location.protocol + "//" + window.location.host : 'http://localhost:5000';
+    return process.env.NODE_ENV ==="production" ? window.location.protocol + "//" + window.location.host : 'http://192.168.0.103:5000';
 }
 
 /**後端API-Setting 控制器 */
@@ -44,6 +44,11 @@ export class Query{
         return (await backendServiceRequest.get('api/Query/GetIPList')).data;
     }
     static async QueryData(condition){
-        return (await backendServiceRequest.post('api/Query/QueryData',condition)).data;
+     return backendServiceRequest.post('api/Query/QueryData',condition).then(res=>{
+          return res.data;
+      }).catch(e=>{
+          console.log('err',e);
+          return 'error'
+      });
     }
 }

@@ -12,6 +12,7 @@
   </div>
 </template>
 
+
 <script>
 import infoCard from "../components/InfoCard/InfoCard.vue";
 export default {
@@ -63,8 +64,70 @@ export default {
         });
       };
     },
+    addFakeData(number) {
+      console.log("add fake", number);
+      for (let index = 0; index < number; index++) {
+        var ip = `192.168.0.${index + 1}`;
+        const element = {
+          sensorIP: ip,
+          eqName: "EQ1",
+          unitName: "Unit1",
+          toDayHitNumber: 12,
+          vibEngX: 1.23,
+          vibEngY: 1.23,
+          vibEngZ: 1.23999,
+          isPLCConnected: true,
+          isRunning: true,
+          eventData: {
+            Events: [
+              {
+                EventTime: Date.now(),
+                EventType: "eventType",
+                ValueRec: 12.23,
+                Level: 1,
+                Content: "This is content",
+                XAxisEvent: 0,
+                YAxisEvent: 0,
+                ZAxisEvent: 0,
+                XValue: 32,
+                YValue: 22,
+                ZValue: 12,
+              },
+              {
+                EventTime: Date.now(),
+                EventType: "eventType",
+                ValueRec: 12.23,
+                Level: 2,
+                Content: "This is content 2",
+                XAxisEvent: 0,
+                YAxisEvent: 0,
+                ZAxisEvent: 0,
+                XValue: 32,
+                YValue: 22,
+                ZValue: 12,
+              },
+            ],
+          },
+          chartData: {},
+        };
+        this.connectedIPList.push(element);
+      }
+    },
+    RenderFakeData() {
+      this.connectedIPList.forEach((element) => {
+        var ip = element.sensorIP;
+        var refs = this.$refs[ip];
+        if (refs != undefined) refs[0].dataSet = element;
+      });
+    },
   },
   mounted() {
+    if (!(process.env.NODE_ENV === "production")) {
+      this.addFakeData(7);
+      setTimeout(() => {
+        this.RenderFakeData();
+      }, 1);
+    }
     this.wsConnect();
   },
 };
@@ -72,7 +135,6 @@ export default {
 
 <style>
 .home {
-  height: 100%;
   background-color: black;
 }
 </style>

@@ -4,7 +4,7 @@
     <div>
       <b-row class="mb-2">
         <b-col cols="6" class="text-left"
-          ><b-icon-list-check></b-icon-list-check> 感測單元 IP</b-col
+          ><b-icon-list-check></b-icon-list-check> 模組 IP</b-col
         >
         <b-col class="ip-label" cols="6" @click="SensorIPClickHandle">{{
           dataSet.sensorIP

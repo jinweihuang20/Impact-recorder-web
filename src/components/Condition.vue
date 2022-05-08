@@ -17,7 +17,11 @@
           id="start-datepicker"
           v-model="condition.QuStart"
           class="mb-2"
-        ></b-form-datepicker> </b-col
+        ></b-form-datepicker>
+        <b-form-timepicker
+          v-model="condition.QuStart_Time"
+          locale="en"
+        ></b-form-timepicker> </b-col
     ></b-row>
     <b-row class="mb-3"
       ><b-col cols="3">END</b-col
@@ -26,7 +30,11 @@
           id="end-datepicker"
           v-model="condition.QuEnd"
           class="mb-2"
-        ></b-form-datepicker> </b-col
+        ></b-form-datepicker>
+        <b-form-timepicker
+          v-model="condition.QuEnd_Time"
+          locale="en"
+        ></b-form-timepicker> </b-col
     ></b-row>
     <b-row
       ><b-button id="query-button" squared block @click="QueryBtnClickHandler">
@@ -46,6 +54,8 @@ export default {
         IP: null,
         QuStart: null,
         QuEnd: null,
+        QuStart_Time: "00:00:00",
+        QuEnd_Time: "00:00:00",
       },
       IPOptions: [
         {
