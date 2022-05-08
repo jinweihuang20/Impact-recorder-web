@@ -1,6 +1,6 @@
 <template>
   <div
-    class="query-page h-100"
+    class="query-page page"
     v-loading="isLoading"
     element-loading-text="數據查詢中...請稍後"
     element-loading-spinner="el-icon-loading"
@@ -15,7 +15,7 @@
       <b-col cols="9" class="text-center">
         <div class="result-container">
           <b-row>
-            <b-col><h3 class="text-left mt-2 mb-4">查詢結果</h3></b-col>
+            <b-col><h3 class="text-left mt-2 mb-4">查詢結果</h3> </b-col>
             <b-col class="text-right pt-3">
               <el-button size="small" type="danger" @click="tableData = []"
                 >清除</el-button
@@ -25,6 +25,7 @@
               >
             </b-col>
           </b-row>
+
           <el-table :data="tableData" max-height="750" empty-text="沒有資料">
             <el-table-column
               prop="Time"
@@ -144,7 +145,6 @@ export default {
 <style>
 .query-page {
   height: 100%;
-  background-color: black;
 }
 
 .result-container {

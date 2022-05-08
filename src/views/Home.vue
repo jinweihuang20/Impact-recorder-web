@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home page">
     <span :key="reunderkey"></span>
     <info-card
       v-for="item in connectedIPList"
@@ -72,7 +72,6 @@ export default {
           sensorIP: ip,
           eqName: "EQ1",
           unitName: "Unit1",
-          toDayHitNumber: 12,
           vibEngX: 1.23,
           vibEngY: 1.23,
           vibEngZ: 1.23999,
@@ -107,6 +106,7 @@ export default {
                 ZValue: 12,
               },
             ],
+            ToDayHit: 44 + index * 2,
           },
           chartData: {},
         };
@@ -135,6 +135,5 @@ export default {
 
 <style>
 .home {
-  background-color: black;
 }
 </style>

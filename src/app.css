@@ -15,6 +15,11 @@
     cursor: pointer;
 }
 
+.page{
+    padding-top: 20px;
+    background-color: black;
+}
+
 h4 {
     text-align: left;
     color: #2196f3;

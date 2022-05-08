@@ -6,7 +6,7 @@
           <b-icon-tools @click="SettingButtonHandle"></b-icon-tools>
           {{ dataSet.sensorIP }}
         </b-col>
-        <b-col class="text-right">
+        <b-col v-if="!IsProduction" class="text-right">
           {{ $moment(dataSet.time).format("mm:ss") }}
         </b-col>
       </b-row>
@@ -207,6 +207,11 @@ export default {
   },
   mounted() {
     console.log("mounted.");
+  },
+  computed: {
+    IsProduction() {
+      return process.env.NODE_PROCESS == "production";
+    },
   },
 };
 </script>

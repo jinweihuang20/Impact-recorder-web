@@ -1,6 +1,13 @@
 <template>
-  <b-card class="state-card info-card-sub-card" bg-variant="dark">
-    <h4>設備資訊</h4>
+  <b-card
+    :id="StateCardID"
+    class="state-card info-card-sub-card"
+    bg-variant="dark"
+  >
+    <b-row>
+      <h4>設備資訊</h4>
+    </b-row>
+
     <div>
       <b-row class="mb-2">
         <b-col cols="6" class="text-left"
@@ -14,8 +21,17 @@
         <b-col cols="6" class="text-left">
           <b-icon-list-check></b-icon-list-check> 監控部位</b-col
         >
-        <b-col cols="6">{{ dataSet.unitName }}</b-col>
+        <b-col cols="6"
+          >{{ dataSet.unitName }}
+          <b-icon-pencil-square
+            class="edit-icon"
+            v-show="isMouseEnter"
+            v-b-modal="EditModelID"
+          >
+          </b-icon-pencil-square
+        ></b-col>
       </b-row>
+
       <b-row class="mb-2">
         <b-col cols="6" class="text-left">
           <b-icon-link></b-icon-link> 設備運轉</b-col
@@ -33,13 +49,64 @@
         ></b-col>
       </b-row>
     </div>
+    <b-modal
+      @ok="SubmitEditResult"
+      @hidden="EditModalCloseHandle"
+      :busy="!IsBackendReply"
+      :id="EditModelID"
+      size="md"
+      :title="'編輯屬性 - ' + dataSet.sensorIP"
+    >
+      <b-form>
+        <b-form-group
+          id="input-group-1"
+          label="監控設備名稱"
+          label-for="input-eqname"
+        >
+          <b-form-input
+            id="input-eqname"
+            v-model="form.eqName"
+            :placeholder="dataSet.eqName"
+            required
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group
+          id="input-group-1"
+          label="監控元件名稱"
+          label-for="input-unitname"
+        >
+          <b-form-input
+            id="input-eqname"
+            v-model="form.unitName"
+            :placeholder="dataSet.unitName"
+            required
+          ></b-form-input> </b-form-group
+      ></b-form>
+    </b-modal>
   </b-card>
 </template>
 
 <script>
 export default {
   props: {
-    dataSet: Object,
+    dataSet: {
+      type: Object,
+      default() {
+        return {
+          sensorIP: "undefined",
+        };
+      },
+    },
+  },
+  data() {
+    return {
+      isMouseEnter: true,
+      IsBackendReply: true,
+      form: {
+        eqName: "",
+        unitName: "",
+      },
+    };
   },
   computed: {
     eqRunState() {
@@ -48,13 +115,31 @@ export default {
     plcConnectedState() {
       return this.dataSet.isPLCConnected ? "success" : "danger";
     },
+    StateCardID() {
+      return "state-card-" + this.dataSet.sensorIP;
+    },
+    EditModelID() {
+      return "edit-modal-" + this.dataSet.sensorIP;
+    },
   },
   methods: {
     SensorIPClickHandle() {
       // alert("open website of sensor ");
       window.open(`http://${this.dataSet.sensorIP}`);
     },
+    SubmitEditResult(bvModalEvent) {
+      this.IsBackendReply = false;
+      bvModalEvent.preventDefault();
+
+      setTimeout(() => {
+        this.IsBackendReply = true;
+      }, 3000);
+    },
+    EditModalCloseHandle() {
+      this.form = { eqName: "", unitName: "" };
+    },
   },
+  mounted() {},
 };
 </script>
 
@@ -75,5 +160,9 @@ export default {
   cursor: pointer;
   font-weight: bold;
   text-decoration: underline;
+}
+
+.edit-icon:hover {
+  color: rgb(1, 197, 197);
 }
 </style>

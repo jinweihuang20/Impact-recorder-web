@@ -1,6 +1,7 @@
 <template>
   <div class="condition-setting p-3">
     <h3 class="mb-4">條件設定</h3>
+    <el-divider></el-divider>
     <b-row class="mb-4"
       ><b-col cols="3">SENSOR</b-col
       ><b-col>
@@ -37,7 +38,12 @@
         ></b-form-timepicker> </b-col
     ></b-row>
     <b-row
-      ><b-button id="query-button" squared block @click="QueryBtnClickHandler">
+      ><b-button
+        :disabled="condition.QuStart == null || condition.QuEnd == null"
+        id="query-button"
+        block
+        @click="QueryBtnClickHandler"
+      >
         <b-icon-clipboard-data></b-icon-clipboard-data>
         查詢</b-button
       ></b-row
@@ -110,6 +116,10 @@ export default {
   background-color: rgb(33, 150, 243);
   font-size: x-large;
   height: 60px;
-  margin: 0;
+  border-radius: 33px;
+  margin: 14px;
+}
+#query-button:hover {
+  background-color: rgb(11, 64, 107);
 }
 </style>
