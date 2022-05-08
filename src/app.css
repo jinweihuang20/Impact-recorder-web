@@ -20,9 +20,13 @@
     background-color: black;
 }
 
+.title-icon,h4{
+    color: #269dff;
+}
+
+
 h4 {
     text-align: left;
-    color: #2196f3;
     font-weight: bold;
     letter-spacing: 1px;
     margin-bottom: 17px;

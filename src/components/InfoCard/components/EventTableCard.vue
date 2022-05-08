@@ -8,7 +8,7 @@
         empty-text="尚未有事件"
         max-height="180"
         :header-cell-style="headStyle"
-        :row-style="rowStyle"
+        :cell-style="rowStyle"
         style="background-color: rgb(32, 32, 32)"
       >
         <el-table-column

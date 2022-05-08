@@ -15,9 +15,24 @@
       <b-col lg="9" class="text-center">
         <div class="result-container">
           <b-row>
-            <b-col><h3 class="text-left mt-2 mb-4">查詢結果</h3> </b-col>
+            <b-col>
+              <h3 class="text-left mt-2 mb-4">
+                <b-icon-clipboard-data
+                  class="title-icon"
+                ></b-icon-clipboard-data>
+                查詢結果 - 共 <u>{{ totalItemNum }}</u> 筆
+              </h3>
+            </b-col>
             <b-col class="text-right pt-3">
-              <el-button size="small" type="danger" @click="tableData = []"
+              <el-button
+                size="small"
+                type="danger"
+                @click="
+                  {
+                    tableData = [];
+                    pageDataMap = {};
+                  }
+                "
                 >清除</el-button
               >
               <el-button :disabled="tableData.length == 0" size="small" type=""
@@ -26,10 +41,7 @@
             </b-col>
           </b-row>
           <b-row no-gutters>
-            <b-col cols="2" class="text-center pt-1"
-              >共 {{ totalItemNum }} 筆</b-col
-            >
-            <b-col cols="9" class="text-left">
+            <b-col cols="4" class="text-left">
               <!-- 分頁 -->
               <div class="block text-left mb-3" style="color: white">
                 <el-pagination
@@ -47,6 +59,9 @@
           <el-table
             :key="tableData"
             :data="pageData"
+            :header-cell-style="headStyle"
+            :cell-style="cellStyle"
+            :row-style="rowStyle"
             max-height="800"
             empty-text="沒有資料"
           >
@@ -129,21 +144,22 @@ export default {
       currentPage: 0,
       pageItemNum: 20, //每一頁顯示的資料筆數
       pageDataMap: {},
-      tableData:
-        env.NODE_PROCESS == "prodution"
-          ? []
-          : [
-              {
-                Time: "2022-05-06T10:11:40",
-                Event: "This is fake",
-                Location: "SP",
-                IP: "123.123.123.123",
-                FeatureXAxis: 0,
-                FeatureYAxis: 0,
-                FeatureZAxis: 0,
-                Level: 1,
-              },
-            ],
+      tableData: [],
+      headStyle: {
+        fontSize: "12px",
+        fontWeight: "bold",
+        backgroundColor: "black",
+        color: "white",
+      },
+      cellStyle: {
+        fontSize: "12px",
+        backgroundColor: "rgb(32,32,32)",
+        color: "white",
+      },
+      rowStyle: {
+        backgroundColor: "rgb(3,3,32)",
+        color: "white",
+      },
     };
   },
   computed: {
@@ -193,7 +209,7 @@ export default {
       return cellValue.toFixed(5);
     },
     AxisStateValFormat(row, column, cellValue, index) {
-      return cellValue ? "V" : "X";
+      return cellValue ? "V" : "-";
     },
   },
 };

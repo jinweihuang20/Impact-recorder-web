@@ -1,6 +1,8 @@
 <template>
   <div class="condition-setting p-3">
-    <h3 class="mb-4">條件設定</h3>
+    <h3 class="mb-4">
+      <b-icon-pencil-square class="title-icon"></b-icon-pencil-square> 條件設定
+    </h3>
     <el-divider></el-divider>
     <b-row class="mb-4"
       ><b-col cols="3">SENSOR</b-col
