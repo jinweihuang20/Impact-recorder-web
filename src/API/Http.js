@@ -11,7 +11,7 @@ var backendServiceRequest = axios.create(
 );
 
 function getBaseURL(){
-    return process.env.NODE_ENV ==="production" ? window.location.protocol + "//" + window.location.host : 'http://192.168.0.103:4000';
+    return process.env.NODE_ENV ==="production" ? window.location.protocol + "//" + window.location.host : 'https://192.168.0.103:4001';
 }
 
 /**後端API-Setting 控制器 */
@@ -62,7 +62,9 @@ export class Query{
     }
 
     static async GetCsvFile(key){
-        return getBaseURL()+"/"+ (await (backendServiceRequest.get(`api/Query/GetCsvFile/${key}`))).data;
+    
+        var filePath = (await (backendServiceRequest.get(`api/Query/GetCsvFile/${key}`))).data;
+        return getBaseURL()+"/"+ filePath;
     }
 }
 

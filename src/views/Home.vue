@@ -32,7 +32,7 @@ export default {
       var Host =
         process.env.NODE_ENV === "production"
           ? window.location.protocol + "//" + window.location.host
-          : "https://192.168.0.201:5001";
+          : "https://192.168.0.103:4001";
       var wsRoute = `${Host.replace(
         "http",
         "ws"
@@ -53,10 +53,19 @@ export default {
         );
         if (index == -1) {
           this.connectedIPList.push(dataObj);
+          //sorted
+          this.connectedIPList.sort(function (a, b) {
+            let x = a.sensorIP.toLowerCase();
+            let y = b.sensorIP.toLowerCase();
+            if (x < y) return -1;
+            if (x > y) return 1;
+            return 0;
+          });
           this.reunderkey = Date.now();
         } else {
           this.connectedIPList[index] = dataObj;
         }
+
         this.connectedIPList.forEach((element) => {
           var ip = element.sensorIP;
           var refs = this.$refs[ip];
@@ -122,12 +131,12 @@ export default {
     },
   },
   mounted() {
-    if (!(process.env.NODE_ENV === "production")) {
-      this.addFakeData(7);
-      setTimeout(() => {
-        this.RenderFakeData();
-      }, 1);
-    }
+    // if (!(process.env.NODE_ENV === "production")) {
+    //   this.addFakeData(7);
+    //   setTimeout(() => {
+    //     this.RenderFakeData();
+    //   }, 1);
+    // }
     this.wsConnect();
   },
 };

@@ -229,7 +229,7 @@ export default {
     async ExportCSVButtonClickHandle() {
       var path = await Query.GetCsvFile(this.querykey);
       console.info(path);
-      window.open(path);
+      if (path) window.open(path);
     },
   },
 

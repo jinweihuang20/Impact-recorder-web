@@ -25,8 +25,13 @@
             </b-row>
           </b-col>
           <b-col class="text-left" cols="10"
-            ><div style="margin-top: 8px; width: 100%; height: 170px">
-              <chart :dataList="dataSet.chartData.trendDataList"></chart></div
+            ><div style="margin-top: 0; width: 100%; height: 170px">
+              <!-- <chart :dataList="dataSet.chartData.trendDataList"></chart> -->
+              <LineChart
+                :styles="chartStyle"
+                :chartData="chartData"
+                :datasetIdKey="key + '-1'"
+              ></LineChart></div
           ></b-col>
         </b-row>
       </div>
@@ -35,77 +40,94 @@
 </template>
 
 <script>
-import chart from "../../Chart/lineChartJs.vue";
+import chart from "../../Chart/TrendChart.vue";
+import LineChart from "../../Chart/ReaactiveChart";
 export default {
-  components: { chart },
+  components: { chart, LineChart },
   data() {
     return {
-      options: {
-        chart: {
-          type: "line",
-          animations: {
-            enabled: false,
-            animateGradually: {
-              enabled: false,
-            },
-            dynamicAnimation: {
-              enabled: false,
-            },
+      chartData: {
+        labels: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+        ],
+        datasets: [
+          {
+            label: "X",
+            borderColor: "rgb(39, 157, 255)",
+            backgroundColor: "rgb(39, 157, 255)",
+            data: [40, 39, 10, 40, 39, 80, 0],
+            borderWidth: 1,
           },
-          background: "rgb(51,51,51)",
-          foreColor: "#fff",
-        },
-        title: {
-          text: "Energy",
-          align: "left",
-          style: {
-            fontSize: "12px",
-            fontWeight: "bold",
-            fontFamily: undefined,
-            color: "#fff",
+          {
+            label: "Y",
+            borderColor: "rgb(66, 158, 100)",
+            backgroundColor: "rgb(66, 158, 100)",
+            data: [30, 2, 10, 40, 39, 8, 0],
+            borderWidth: 1,
           },
-        },
-        xaxis: {
-          categories: [],
-          title: {
-            text: "",
+          {
+            label: "Z",
+            borderColor: "rgb(248, 113, 113)",
+            backgroundColor: "rgb(248, 113, 113)",
+            data: [30, 2, 10, 40, 9, 80, 40],
+            borderWidth: 1,
           },
-          /**X軸Tick顯示的點數(label數量) */
-          tickAmount: 4,
-        },
-        yaxis: {
-          labels: {
-            formatter: (value) => {
-              return value.toFixed(2);
-            },
-          },
-          title: {
-            text: "",
-          },
-          max: 1,
-          min: 0,
-        },
-        stroke: {
-          show: true,
-          curve: "straight",
-          lineCap: "square",
-          colors: undefined,
-          width: 2,
-          dashArray: 0,
-        },
+        ],
       },
-      series: [
-        { name: "X", data: [1, 2, 3, 2, 23, 1, 33] },
-        { name: "Y", data: [1, 23, 3, 2, 23, 1, 2] },
-        { name: "Z", data: [12, 32, 3, 2, 23, 1, 33] },
-      ],
+      key: 1,
+      chartStyle: {
+        backgroundColor: "black",
+      },
     };
   },
   props: {
     dataSet: Object,
   },
+  watch: {
+    dataSet: {
+      deep: true,
+      handler: function (newData) {
+        if (newData.chartData.trendDataList) {
+          var ptLen = newData.chartData.trendDataList[0].length;
+          if (this.chartData.labels.length != ptLen) {
+            this.chartData.labels = [];
+            for (let index = 0; index < ptLen; index++) {
+              this.chartData.labels.push(index);
+            }
+          }
 
-  mounted() {},
+          for (
+            let index = 0;
+            index < newData.chartData.trendDataList.length;
+            index++
+          ) {
+            this.chartData.datasets[index].data =
+              newData.chartData.trendDataList[index];
+          }
+          this.key = Date.now();
+        }
+      },
+    },
+  },
+
+  mounted() {
+    // setInterval(() => {
+    //   this.chartData.labels[0] = this.key + "";
+    //   var rand = Math.random();
+    //   this.chartData.datasets[0].data.push(rand * 100);
+    //   this.chartData.datasets[0].data = this.chartData.datasets[0].data.slice(
+    //     1,
+    //     8
+    //   );
+    //   this.key += 10;
+    // }, 1000);
+  },
 };
 </script>
 
