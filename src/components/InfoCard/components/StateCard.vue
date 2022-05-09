@@ -1,9 +1,5 @@
 <template>
-  <b-card
-    :id="StateCardID"
-    class="state-card info-card-sub-card"
-    bg-variant="dark"
-  >
+  <b-card :id="StateCardID" class="state-card info-card-sub-card">
     <h4>設備資訊</h4>
 
     <div>

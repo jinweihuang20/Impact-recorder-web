@@ -1,13 +1,15 @@
 <template>
-  <div class="info-card">
+  <div class="info-card" v-bind:style="dynamicBorderStyle">
     <div class="card-title">
       <b-row>
-        <b-col>
-          <b-icon-tools @click="SettingButtonHandle"></b-icon-tools>
-          {{ dataSet.sensorIP }}
+        <b-col cols="2">
+          {{ dataSet.eqName }}
         </b-col>
-        <b-col v-if="!IsProduction" class="text-right">
+        <b-col cols="9" class="text-right">
           {{ $moment(dataSet.time).format("mm:ss") }}
+        </b-col>
+        <b-col cols="1" v-if="!IsProduction" class="text-right">
+          <b-icon-tools @click="SettingButtonHandle"></b-icon-tools>
         </b-col>
       </b-row>
     </div>
@@ -32,7 +34,7 @@
     </b-container>
     <el-drawer
       :visible.sync="showSettingDrawer"
-      direction="ltr"
+      direction="rtl"
       :title="SettingDrawerTitle"
       @close="
         {
@@ -40,6 +42,7 @@
         }
       "
       @open="GetModuleSetting"
+      :size="600"
     >
       <b-card
         class="text-left h-100"
@@ -169,6 +172,9 @@ export default {
         thresHold_Y: 99.0,
         thresHold_Z: 99.0,
       },
+      dynamicBorderStyle: {
+        border: "1px grey solid",
+      },
     };
   },
   props: {},
@@ -199,6 +205,8 @@ export default {
         title: "碰撞偵測系統",
         autoHideDelay: 3000,
         appendToast: append,
+        variant: "info",
+        toaster: "b-toaster-top-center",
       });
     },
   },
@@ -217,7 +225,7 @@ export default {
 div.info-card {
   margin: 5px;
   padding: 10px;
-  background-color: rgb(27, 27, 27);
+  background-color: rgb(49, 49, 49);
   border-radius: 4px;
 }
 

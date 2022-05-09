@@ -1,11 +1,11 @@
 <template>
-  <b-card class="info-card-sub-card" bg-variant="dark">
+  <b-card class="info-card-sub-card">
     <h4>振動能量趨勢</h4>
     <b-container style="width: 100%; margin: auto 12px; padding: 0" fluid>
       <div>
         <b-row>
           <b-col cols="2">
-            <b-row>X軸 </b-row>
+            <b-row> X軸 </b-row>
             <b-row>
               <div class="value-col">
                 {{ dataSet.vibEngX.toFixed(3) }}
@@ -26,7 +26,6 @@
           </b-col>
           <b-col class="text-left" cols="10"
             ><div style="margin-top: 0; width: 100%; height: 170px">
-              <!-- <chart :dataList="dataSet.chartData.trendDataList"></chart> -->
               <LineChart
                 :styles="chartStyle"
                 :chartData="chartData"
@@ -42,6 +41,7 @@
 <script>
 import chart from "../../Chart/TrendChart.vue";
 import LineChart from "../../Chart/ReaactiveChart";
+import { Setting } from "../../../API/Http";
 export default {
   components: { chart, LineChart },
   data() {
@@ -116,18 +116,7 @@ export default {
     },
   },
 
-  mounted() {
-    // setInterval(() => {
-    //   this.chartData.labels[0] = this.key + "";
-    //   var rand = Math.random();
-    //   this.chartData.datasets[0].data.push(rand * 100);
-    //   this.chartData.datasets[0].data = this.chartData.datasets[0].data.slice(
-    //     1,
-    //     8
-    //   );
-    //   this.key += 10;
-    // }, 1000);
-  },
+  mounted() {},
 };
 </script>
 

@@ -51,7 +51,7 @@
                 <el-pagination
                   :current-page.sync="currentPage"
                   :page-size="pageItemNum"
-                  :pager-count="11"
+                  :pager-count="7"
                   layout="prev, pager, next"
                   :total="totalItemNum"
                 >

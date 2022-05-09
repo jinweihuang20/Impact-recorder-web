@@ -1,5 +1,5 @@
 <template>
-  <b-card class="day-hit-card info-card-sub-card" bg-variant="dark">
+  <b-card class="day-hit-card info-card-sub-card">
     <b-row>
       <b-col cols="8" class="text-left">
         <h4>DAY HIT</h4>
@@ -76,6 +76,8 @@ export default {
 
 .reset-text:hover {
   color: rgb(1, 197, 197);
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .hit-num-text {

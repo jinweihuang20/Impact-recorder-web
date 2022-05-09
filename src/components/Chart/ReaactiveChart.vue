@@ -1,16 +1,18 @@
 <template >
-  <LineChartGenerator
-    ref="line-chart"
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <div class="line-chart-container">
+    <LineChartGenerator
+      ref="line-chart"
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height"
+    />
+  </div>
 </template>
 
 <script>
@@ -124,18 +126,11 @@ export default {
       },
     };
   },
-
-  // mounted() {
-  //   var key = 1;
-  //   setInterval(() => {
-  //     this.chartData.labels[0] = key + "";
-  //     this.chartData.datasets[0].data[0] = key;
-  //     this.chartData.datasets[1].data[3] = key * 0.23;
-  //     key += 10;
-  //     // console.log(this.$refs["line-chart"]);
-  //     // this.$refs["line-chart"].update();
-  //     this.$refs["line-chart"].renderChart(this.chartData, this.chartOptions);
-  //   }, 1000);
-  // },
 };
 </script>
+
+<style>
+.line-chart-container {
+  border: 1px solid rgb(51, 51, 51);
+}
+</style>>

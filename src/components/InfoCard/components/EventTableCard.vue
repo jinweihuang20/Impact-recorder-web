@@ -1,5 +1,5 @@
 <template>
-  <b-card class="info-card-sub-card" bg-variant="dark">
+  <b-card class="info-card-sub-card">
     <h4>EVENTS</h4>
     <b-container>
       <el-table
