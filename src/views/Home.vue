@@ -6,7 +6,8 @@
       :key="item.sensorIP"
       :ref="item.sensorIP"
       :dataSet="item"
-      :id="'info-card-' + item.sensorIP"
+      :id="item.sensorIP"
+      v-observe-visibility="visibilityChanged"
     >
       <div>value</div>
     </info-card>
@@ -26,6 +27,7 @@ export default {
       ws: null,
       connectedIPList: [],
       reunderkey: 1,
+      visibleMap: {},
     };
   },
   methods: {
@@ -48,20 +50,17 @@ export default {
       };
       ws.onmessage = (msg) => {
         var dataObj = JSON.parse(msg.data);
+
         var ip = dataObj.sensorIP;
+
         var index = this.connectedIPList.findIndex(
           (item) => item.sensorIP == ip
         );
         if (index == -1) {
           this.connectedIPList.push(dataObj);
           //sorted
-          this.connectedIPList.sort(function (a, b) {
-            let x = a.sensorIP.toLowerCase();
-            let y = b.sensorIP.toLowerCase();
-            if (x < y) return -1;
-            if (x > y) return 1;
-            return 0;
-          });
+          this.SortList();
+
           this.reunderkey = Date.now();
         } else {
           this.connectedIPList[index] = dataObj;
@@ -69,10 +68,20 @@ export default {
 
         this.connectedIPList.forEach((element) => {
           var ip = element.sensorIP;
+          if (!this.visibleMap[ip]) return;
           var refs = this.$refs[ip];
           if (refs != undefined) refs[0].dataSet = element;
         });
       };
+    },
+    SortList() {
+      this.connectedIPList.sort(function (a, b) {
+        let x = a.sensorIP.toLowerCase();
+        let y = b.sensorIP.toLowerCase();
+        if (x < y) return -1;
+        if (x > y) return 1;
+        return 0;
+      });
     },
     addFakeData(number) {
       console.log("add fake", number);
@@ -129,6 +138,12 @@ export default {
         var refs = this.$refs[ip];
         if (refs != undefined) refs[0].dataSet = element;
       });
+    },
+
+    visibilityChanged(isVisible, entry) {
+      var ip = entry.target.getAttribute("id");
+      this.visibleMap[ip] = isVisible;
+      console.log(this.visibleMap);
     },
   },
   mounted() {
