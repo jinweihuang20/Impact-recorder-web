@@ -23,6 +23,7 @@
     "vue-apexcharts": "^1.6.2",
     "vue-chartjs": "^4.0.0",
     "vue-mqtt": "^2.0.3",
+    "vue-observe-visibility": "^1.0.0",
     "vue-router": "^3.2.0",
     "vuetrend": "^0.3.4"
   },
@@ -51,8 +52,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "vue/no-unused-components":"off",
-      "no-unused-vars":"off"
+      "vue/no-unused-components": "off",
+      "no-unused-vars": "off"
     }
   },
   "browserslist": [

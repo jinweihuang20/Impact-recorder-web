@@ -14,9 +14,12 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment';
 import Trend from 'vuetrend';
- 
+
+import VueObserveVisibility from 'vue-observe-visibility'
+
 import './app.css';
 
+Vue.use(VueObserveVisibility)
 Vue.use(Trend);
 Vue.use(ElementUI);
 

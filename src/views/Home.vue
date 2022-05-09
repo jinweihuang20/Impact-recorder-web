@@ -6,6 +6,7 @@
       :key="item.sensorIP"
       :ref="item.sensorIP"
       :dataSet="item"
+      :id="'info-card-' + item.sensorIP"
     >
       <div>value</div>
     </info-card>
@@ -143,6 +144,4 @@ export default {
 </script>
 
 <style>
-.home {
-}
 </style>

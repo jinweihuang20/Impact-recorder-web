@@ -1,5 +1,5 @@
 <template>
-  <b-card class="info-card-sub-card">
+  <b-card class="info-card-sub-card" v-observe-visibility="visibilityChanged">
     <h4>振動能量趨勢</h4>
     <b-container style="width: 100%; margin: auto 12px; padding: 0" fluid>
       <div>
@@ -84,6 +84,7 @@ export default {
       chartStyle: {
         backgroundColor: "black",
       },
+      isVisible: false,
     };
   },
   props: {
@@ -93,6 +94,7 @@ export default {
     dataSet: {
       deep: true,
       handler: function (newData) {
+        if (!this.isVisible) return;
         if (newData.chartData.trendDataList) {
           var ptLen = newData.chartData.trendDataList[0].length;
           if (this.chartData.labels.length != ptLen) {
@@ -115,8 +117,11 @@ export default {
       },
     },
   },
-
-  mounted() {},
+  methods: {
+    visibilityChanged(isVisible, entry) {
+      this.isVisible = isVisible;
+    },
+  },
 };
 </script>
 
