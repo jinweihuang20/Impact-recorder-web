@@ -1,5 +1,5 @@
 <template>
-  <b-card class="info-card-sub-card" v-observe-visibility="visibilityChanged">
+  <b-card class="info-card-sub-card">
     <h4>振動能量趨勢</h4>
     <b-container style="width: 100%; margin: auto 12px; padding: 0" fluid>
       <div>
@@ -27,6 +27,7 @@
           <b-col class="text-left" cols="10"
             ><div style="margin-top: 0; width: 100%; height: 170px">
               <LineChart
+                v-observe-visibility="visibilityChanged"
                 :styles="chartStyle"
                 :chartData="chartData"
                 :datasetIdKey="key + '-1'"
