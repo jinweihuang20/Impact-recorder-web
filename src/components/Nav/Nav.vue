@@ -3,7 +3,8 @@
     <b-navbar toggleable="lg" ref="nav" :variant="nav_style" :type="nav_style">
       <b-navbar-brand to="/">
         <span style="font-size: 23px; font-weight: 800; letter-spacing: 3px">
-          <b-icon-app-indicator></b-icon-app-indicator> {{ $configs.navTitle }}
+          <b-icon-app-indicator></b-icon-app-indicator>
+          {{ $configs.navTitle }}
         </span>
       </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -19,8 +20,7 @@
               class="nav-item-text"
               :key="route.style.color"
               v-bind:style="route.style"
-              >{{ route.name }}</span
-            >
+            >{{ route.name }}</span>
           </b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->

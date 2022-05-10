@@ -5,34 +5,29 @@
       <div>
         <b-row>
           <b-col cols="2">
-            <b-row> X軸 </b-row>
+            <b-row>X軸</b-row>
             <b-row>
-              <div class="value-col">
-                {{ dataSet.vibEngX.toFixed(3) }}
-              </div>
+              <div class="value-col">{{ dataSet.vibEngX.toFixed(3) }}</div>
             </b-row>
-            <b-row>Y軸 </b-row>
+            <b-row>Y軸</b-row>
             <b-row>
-              <div class="value-col">
-                {{ dataSet.vibEngX.toFixed(3) }}
-              </div></b-row
-            >
-            <b-row>Z軸 </b-row>
+              <div class="value-col">{{ dataSet.vibEngX.toFixed(3) }}</div>
+            </b-row>
+            <b-row>Z軸</b-row>
             <b-row>
-              <div class="value-col">
-                {{ dataSet.vibEngX.toFixed(3) }}
-              </div>
+              <div class="value-col">{{ dataSet.vibEngX.toFixed(3) }}</div>
             </b-row>
           </b-col>
-          <b-col class="text-left" cols="10"
-            ><div style="margin-top: 0; width: 100%; height: 170px">
+          <b-col class="text-left" cols="10">
+            <div style="margin-top: 0; width: 100%; height: 170px">
               <LineChart
                 v-observe-visibility="visibilityChanged"
                 :styles="chartStyle"
                 :chartData="chartData"
                 :datasetIdKey="key + '-1'"
-              ></LineChart></div
-          ></b-col>
+              ></LineChart>
+            </div>
+          </b-col>
         </b-row>
       </div>
     </b-container>
@@ -114,6 +109,7 @@ export default {
               newData.chartData.trendDataList[index];
           }
           this.key = Date.now();
+
         }
       },
     },

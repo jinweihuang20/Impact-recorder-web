@@ -9,8 +9,7 @@
         autoDrawEasing="none"
         :gradient="['#FFFFFF']"
         :max="0.01"
-      >
-      </trend>
+      ></trend>
     </div>
     <div class="chart-container">
       <trend
@@ -21,8 +20,7 @@
         autoDrawEasing="none"
         :gradient="['#FFFFFF']"
         :max="0.01"
-      >
-      </trend>
+      ></trend>
     </div>
     <div class="chart-container">
       <trend
@@ -33,8 +31,7 @@
         autoDrawEasing="none"
         :gradient="['#FFFFFF']"
         :max="0.01"
-      >
-      </trend>
+      ></trend>
     </div>
   </div>
 </template>

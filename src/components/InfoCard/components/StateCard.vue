@@ -4,43 +4,40 @@
 
     <div>
       <b-row class="mb-2">
-        <b-col cols="6" class="text-left"
-          ><b-icon-list-check></b-icon-list-check> 模組 IP</b-col
-        >
-        <b-col class="ip-label" cols="6" @click="SensorIPClickHandle">{{
+        <b-col cols="6" class="text-left">
+          <b-icon-list-check></b-icon-list-check>模組 IP
+        </b-col>
+        <b-col class="ip-label" cols="6" @click="SensorIPClickHandle">
+          {{
           dataSet.sensorIP
-        }}</b-col>
+          }}
+        </b-col>
       </b-row>
       <b-row class="mb-2">
         <b-col cols="5" class="text-left">
-          <b-icon-list-check></b-icon-list-check> 監控部位</b-col
-        >
+          <b-icon-list-check></b-icon-list-check>監控部位
+        </b-col>
         <b-col cols="7">
-          <b-icon-pencil-square
-            class="edit-icon"
-            v-show="isMouseEnter"
-            v-b-modal="EditModelID"
-          >
-          </b-icon-pencil-square>
+          <b-icon-pencil-square class="edit-icon" v-show="isMouseEnter" v-b-modal="EditModelID"></b-icon-pencil-square>
           {{ dataSet.unitName }}
         </b-col>
       </b-row>
 
       <b-row class="mb-2">
         <b-col cols="6" class="text-left">
-          <b-icon-link></b-icon-link> 設備運轉</b-col
-        >
+          <b-icon-link></b-icon-link>設備運轉
+        </b-col>
         <b-col cols="6">
           <b-icon-circle-fill :variant="eqRunState"></b-icon-circle-fill>
         </b-col>
       </b-row>
       <b-row class="mb-2">
         <b-col cols="6" class="text-left">
-          <b-icon-link></b-icon-link> PLC連線</b-col
-        >
-        <b-col cols="6"
-          ><b-icon-circle-fill :variant="plcConnectedState"></b-icon-circle-fill
-        ></b-col>
+          <b-icon-link></b-icon-link>PLC連線
+        </b-col>
+        <b-col cols="6">
+          <b-icon-circle-fill :variant="plcConnectedState"></b-icon-circle-fill>
+        </b-col>
       </b-row>
     </div>
     <b-modal
@@ -52,11 +49,7 @@
       :title="'編輯屬性 - ' + dataSet.sensorIP"
     >
       <b-form>
-        <b-form-group
-          id="input-group-1"
-          label="監控設備名稱"
-          label-for="input-eqname"
-        >
+        <b-form-group id="input-group-1" label="監控設備名稱" label-for="input-eqname">
           <b-form-input
             id="input-eqname"
             v-model="form.eqName"
@@ -64,18 +57,15 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          id="input-group-1"
-          label="監控元件名稱"
-          label-for="input-unitname"
-        >
+        <b-form-group id="input-group-1" label="監控元件名稱" label-for="input-unitname">
           <b-form-input
             id="input-eqname"
             v-model="form.unitName"
             :placeholder="dataSet.unitName"
             required
-          ></b-form-input> </b-form-group
-      ></b-form>
+          ></b-form-input>
+        </b-form-group>
+      </b-form>
     </b-modal>
   </b-card>
 </template>
@@ -139,7 +129,7 @@ export default {
       this.form = { eqName: "", unitName: "" };
     },
   },
-  mounted() {},
+  mounted() { },
 };
 </script>
 

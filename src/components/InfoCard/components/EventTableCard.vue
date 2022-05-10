@@ -11,30 +11,10 @@
         :cell-style="rowStyle"
         style="background-color: rgb(32, 32, 32)"
       >
-        <el-table-column
-          sortable=""
-          prop="EventTime_Formated"
-          label="TIME"
-          width="140"
-        >
-        </el-table-column>
-        <el-table-column
-          sortable=""
-          prop="EventType"
-          label="Event Group"
-          width="140"
-        >
-        </el-table-column>
-        <el-table-column sortable="" prop="Content" label="內容">
-        </el-table-column>
-        <el-table-column
-          align="center"
-          sortable=""
-          prop="Level"
-          label="Level"
-          width="80"
-        >
-        </el-table-column>
+        <el-table-column sortable prop="EventTime_Formated" label="TIME" width="140"></el-table-column>
+        <el-table-column sortable prop="EventType" label="Event Group" width="140"></el-table-column>
+        <el-table-column sortable prop="Content" label="內容"></el-table-column>
+        <el-table-column align="center" sortable prop="Level" label="Level" width="80"></el-table-column>
       </el-table>
     </b-container>
   </b-card>

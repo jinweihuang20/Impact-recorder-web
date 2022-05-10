@@ -2,12 +2,8 @@
   <div class="info-card" v-bind:style="dynamicBorderStyle">
     <div class="card-title">
       <b-row>
-        <b-col cols="2">
-          {{ dataSet.eqName }}
-        </b-col>
-        <b-col cols="9" class="text-right">
-          {{ $moment(dataSet.time).format("mm:ss") }}
-        </b-col>
+        <b-col cols="2">{{ dataSet.eqName }}</b-col>
+        <b-col cols="9" class="text-right">{{ $moment(dataSet.time).format("mm:ss") }}</b-col>
         <b-col cols="1" v-if="!IsProduction" class="text-right">
           <b-icon-tools @click="SettingButtonHandle"></b-icon-tools>
         </b-col>
@@ -15,21 +11,18 @@
     </div>
     <b-container fluid="auto">
       <b-row class="text-center">
-        <b-col md="2"><state-card :dataSet="dataSet"> </state-card></b-col>
-        <b-col md="2"
-          ><day-hit-card
-            :sensorIP="dataSet.sensorIP"
-            :hitNum="dataSet.eventData.ToDayHit"
-          >
-          </day-hit-card
-        ></b-col>
-        <b-col md="4"
-          ><event-table-card :tableData="dataSet.eventData.Events">
-          </event-table-card
-        ></b-col>
+        <b-col md="2">
+          <state-card :dataSet="dataSet"></state-card>
+        </b-col>
+        <b-col md="2">
+          <day-hit-card :sensorIP="dataSet.sensorIP" :hitNum="dataSet.eventData.ToDayHit"></day-hit-card>
+        </b-col>
         <b-col md="4">
-          <vib-energy-card :dataSet="dataSet"> </vib-energy-card
-        ></b-col>
+          <event-table-card :tableData="dataSet.eventData.Events"></event-table-card>
+        </b-col>
+        <b-col md="4">
+          <vib-energy-card :dataSet="dataSet"></vib-energy-card>
+        </b-col>
       </b-row>
     </b-container>
     <el-drawer
@@ -39,35 +32,26 @@
       @close="
         {
           waitForSettingDone = false;
-        }
-      "
+        }"
       @open="GetModuleSetting"
       :size="600"
     >
-      <b-card
-        class="text-left h-100"
-        body-bg-variant="dark"
-        v-loading="!moduleSettingDownloadDone"
-      >
-        <b-card-header class="text-right">
+      <b-card class="text-left h-100" body-bg-variant="dark" v-loading="!moduleSettingDownloadDone">
+        <b-card-header class>
           <b-button
             :disabled="waitForSettingDone"
             variant="outline-light"
             @click="SaveSettingClickHandle"
           >
-            <b-spinner
-              v-show="waitForSettingDone"
-              label="Spinning"
-              small
-            ></b-spinner>
-            儲存設定
+            <b-spinner v-show="waitForSettingDone" label="Spinning" small></b-spinner>儲存設定
           </b-button>
+          <span class="ml-2" v-show="waitForSettingDone">參數設定中，可以先關閉此頁面，完成後將會通知您。</span>
         </b-card-header>
         <el-divider></el-divider>
         <div class="mb-5" style="z-index: 12344222">
           <h3>閥值設定</h3>
           <b-row>
-            <b-col cols="3" class="pt-3 ml-2"> X軸閥值</b-col>
+            <b-col cols="3" class="pt-3 ml-2">X軸閥值</b-col>
             <b-col class="pt-2 ml-3 mr-2">
               <el-slider
                 :disabled="waitForSettingDone"
@@ -76,9 +60,10 @@
                 :step="0.01"
                 v-model="moduleSettings.thresHold_X"
               ></el-slider>
-            </b-col> </b-row
-          ><b-row>
-            <b-col cols="3" class="pt-3 ml-2"> Y軸閥值</b-col>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="3" class="pt-3 ml-2">Y軸閥值</b-col>
             <b-col class="pt-2 ml-3 mr-2">
               <el-slider
                 :disabled="waitForSettingDone"
@@ -87,9 +72,10 @@
                 :step="0.01"
                 v-model="moduleSettings.thresHold_Y"
               ></el-slider>
-            </b-col> </b-row
-          ><b-row>
-            <b-col cols="3" class="pt-3 ml-2"> Z軸閥值</b-col>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="3" class="pt-3 ml-2">Z軸閥值</b-col>
             <b-col class="pt-2 ml-3 mr-2">
               <el-slider
                 :disabled="waitForSettingDone"
@@ -104,7 +90,7 @@
         <div>
           <h3>模組設定</h3>
           <b-row>
-            <b-col cols="3" class="pt-3 ml-2"> 量測範圍 </b-col>
+            <b-col cols="3" class="pt-3 ml-2">量測範圍</b-col>
             <b-col>
               <b-dropdown
                 :disabled="waitForSettingDone"
@@ -115,18 +101,10 @@
                 class="m-md-2 z-index-123123"
                 menu-class="w-100"
               >
-                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(2)"
-                  >2G</b-dropdown-item
-                >
-                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(4)"
-                  >4G</b-dropdown-item
-                >
-                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(8)"
-                  >8G</b-dropdown-item
-                >
-                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(16)"
-                  >16G</b-dropdown-item
-                >
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(2)">2G</b-dropdown-item>
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(4)">4G</b-dropdown-item>
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(8)">8G</b-dropdown-item>
+                <b-dropdown-item @click="MeasureRangeSelectedChangeHandler(16)">16G</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
               </b-dropdown>
             </b-col>

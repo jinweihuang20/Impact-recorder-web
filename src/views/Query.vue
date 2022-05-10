@@ -8,19 +8,15 @@
   >
     <b-row class="mt-3">
       <b-col lg="3" class="text-left w-100">
-        <condition-selector
-          @onQueryButtonClick="QueryBtnClickHandler"
-        ></condition-selector>
+        <condition-selector @onQueryButtonClick="QueryBtnClickHandler"></condition-selector>
       </b-col>
       <b-col lg="9" class="text-center">
         <div class="result-container">
           <b-row>
             <b-col>
               <h3 class="text-left mt-2 mb-4">
-                <b-icon-clipboard-data
-                  class="title-icon"
-                ></b-icon-clipboard-data>
-                查詢結果 - 共 <u>{{ totalItemNum }}</u> 筆
+                <b-icon-clipboard-data class="title-icon"></b-icon-clipboard-data>查詢結果 - 共
+                <u>{{ totalItemNum }}</u> 筆
               </h3>
             </b-col>
             <b-col class="text-right pt-3">
@@ -33,15 +29,13 @@
                     pageDataMap = {};
                   }
                 "
-                >清除</el-button
-              >
+              >清除</el-button>
               <el-button
                 :disabled="tableData.length == 0"
                 @click="ExportCSVButtonClickHandle"
                 size="small"
-                type=""
-                >匯出CSV</el-button
-              >
+                type
+              >匯出CSV</el-button>
             </b-col>
           </b-row>
           <b-row no-gutters>
@@ -54,8 +48,7 @@
                   :pager-count="7"
                   layout="prev, pager, next"
                   :total="totalItemNum"
-                >
-                </el-pagination>
+                ></el-pagination>
               </div>
             </b-col>
           </b-row>
@@ -73,19 +66,11 @@
                 prop="Time"
                 label="TIME"
                 :formatter="timeformat"
-                sortable=""
+                sortable
                 width="150"
               ></el-table-column>
-              <el-table-column
-                prop="IP"
-                sortable=""
-                label="IP"
-                width="128"
-              ></el-table-column>
-              <el-table-column
-                prop="Location"
-                label="Location"
-              ></el-table-column>
+              <el-table-column prop="IP" sortable label="IP" width="128"></el-table-column>
+              <el-table-column prop="Location" label="Location"></el-table-column>
               <el-table-column prop="Event" label="Event"></el-table-column>
               <el-table-column
                 prop="AxisAlarmStateXAxis"
@@ -126,12 +111,7 @@
                 align="center"
                 :formatter="EngValFormat"
               ></el-table-column>
-              <el-table-column
-                prop="Level"
-                label="Level"
-                align="center"
-                sortable=""
-              ></el-table-column>
+              <el-table-column prop="Level" label="Level" align="center" sortable></el-table-column>
             </el-table>
           </div>
         </div>

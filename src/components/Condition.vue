@@ -1,55 +1,43 @@
 <template>
   <div class="condition-setting p-3">
     <h3 class="mb-4">
-      <b-icon-pencil-square class="title-icon"></b-icon-pencil-square> 條件設定
+      <b-icon-pencil-square class="title-icon"></b-icon-pencil-square>條件設定
     </h3>
     <el-divider></el-divider>
-    <b-row class="mb-4"
-      ><b-col cols="3">SENSOR</b-col
-      ><b-col>
+    <b-row class="mb-4">
+      <b-col cols="3">SENSOR</b-col>
+      <b-col>
         <b-form-select
           style="background-color: black; color: white"
           v-model="condition.IP"
           :options="IPOptions"
-        ></b-form-select> </b-col
-    ></b-row>
-    <b-row class="mb-3"
-      ><b-col cols="3">START</b-col
-      ><b-col>
-        <b-form-datepicker
-          id="start-datepicker"
-          v-model="condition.QuStart"
-          class="mb-2"
-        ></b-form-datepicker>
-        <b-form-timepicker
-          v-model="condition.QuStart_Time"
-          locale="en"
-        ></b-form-timepicker> </b-col
-    ></b-row>
-    <b-row class="mb-3"
-      ><b-col cols="3">END</b-col
-      ><b-col>
-        <b-form-datepicker
-          id="end-datepicker"
-          v-model="condition.QuEnd"
-          class="mb-2"
-        ></b-form-datepicker>
-        <b-form-timepicker
-          v-model="condition.QuEnd_Time"
-          locale="en"
-        ></b-form-timepicker> </b-col
-    ></b-row>
-    <b-row
-      ><b-button
+        ></b-form-select>
+      </b-col>
+    </b-row>
+    <b-row class="mb-3">
+      <b-col cols="3">START</b-col>
+      <b-col>
+        <b-form-datepicker id="start-datepicker" v-model="condition.QuStart" class="mb-2"></b-form-datepicker>
+        <b-form-timepicker v-model="condition.QuStart_Time" locale="en"></b-form-timepicker>
+      </b-col>
+    </b-row>
+    <b-row class="mb-3">
+      <b-col cols="3">END</b-col>
+      <b-col>
+        <b-form-datepicker id="end-datepicker" v-model="condition.QuEnd" class="mb-2"></b-form-datepicker>
+        <b-form-timepicker v-model="condition.QuEnd_Time" locale="en"></b-form-timepicker>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-button
         :disabled="condition.QuStart == null || condition.QuEnd == null"
         id="query-button"
         block
         @click="QueryBtnClickHandler"
       >
-        <b-icon-clipboard-data></b-icon-clipboard-data>
-        查詢</b-button
-      ></b-row
-    >
+        <b-icon-clipboard-data></b-icon-clipboard-data>查詢
+      </b-button>
+    </b-row>
   </div>
 </template>
 
