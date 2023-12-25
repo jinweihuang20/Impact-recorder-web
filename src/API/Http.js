@@ -2,16 +2,16 @@ import axios from 'axios';
 var backendServiceRequest = axios.create(
     {
         baseURL: getBaseURL(),
-        headers:{
+        headers: {
             "Accept": "*/*",
             "Content-Type": "application/json",
         }
-        
+
     }
 );
 
-function getBaseURL(){
-    return process.env.NODE_ENV ==="production" ? window.location.protocol + "//" + window.location.host : 'https://192.168.0.103:4001';
+function getBaseURL() {
+    return process.env.NODE_ENV === "production" ? window.location.protocol + "//" + window.location.host : 'http://127.0.0.1:4000';
 }
 
 /**後端API-Setting 控制器 */
@@ -28,43 +28,43 @@ export class Setting {
         console.log(ret.data);
         return ret.data;
     }
-    
+
     /**
      * 重置指定IP之模組當日碰撞次數統計值
      * @param  {String} ip : 模組IP
      */
-    static async ResetHitNumToday(ip){
+    static async ResetHitNumToday(ip) {
         await backendServiceRequest.get(`/api/Setting/ResetHitNumToday/${ip}`);
     }
 
     /////POST
-    static async SetModuleSetting(settings){
-        return await JsonPost(backendServiceRequest,"api/Setting/ModifyModuleSetting",settings);
+    static async SetModuleSetting(settings) {
+        return await JsonPost(backendServiceRequest, "api/Setting/ModifyModuleSetting", settings);
     }
 
 
-    static async ModifyEqUnitName(props){
-        return await JsonPost(backendServiceRequest,"api/Setting/ModifyEqUnitName",props);
+    static async ModifyEqUnitName(props) {
+        return await JsonPost(backendServiceRequest, "api/Setting/ModifyEqUnitName", props);
     }
 }
 
-export class Query{
-    static async GetIPList(){
+export class Query {
+    static async GetIPList() {
         return (await backendServiceRequest.get('api/Query/GetIPList')).data;
     }
-    static async QueryData(condition){
-     return backendServiceRequest.post('api/Query/QueryData',condition).then(res=>{
-          return res.data;
-      }).catch(e=>{
-          console.log('err',e);
-          return 'error'
-      });
+    static async QueryData(condition) {
+        return backendServiceRequest.post('api/Query/QueryData', condition).then(res => {
+            return res.data;
+        }).catch(e => {
+            console.log('err', e);
+            return 'error'
+        });
     }
 
-    static async GetCsvFile(key){
-    
+    static async GetCsvFile(key) {
+
         var filePath = (await (backendServiceRequest.get(`api/Query/GetCsvFile/${key}`))).data;
-        return getBaseURL()+"/"+ filePath;
+        return getBaseURL() + "/" + filePath;
     }
 }
 
@@ -74,12 +74,12 @@ export class Query{
  * @param {Object} jsonData : 要Post出去的物件 ex. { ip:'1.1.1.1' , name:'jsDak'}
  * @return {Object} : Json物件  
 */
-async function JsonPost(axios_instance ,  route , jsonData){
-    console.log(route,jsonData);
-    return axios_instance.post(route,jsonData).then(res=>{
+async function JsonPost(axios_instance, route, jsonData) {
+    console.log(route, jsonData);
+    return axios_instance.post(route, jsonData).then(res => {
         return res.data;
-    }).catch(e=>{
-        console.log('err',e);
+    }).catch(e => {
+        console.log('err', e);
         return 'error'
     });
 }

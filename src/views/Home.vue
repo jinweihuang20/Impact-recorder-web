@@ -7,8 +7,7 @@
       :ref="item.sensorIP"
       :dataSet="item"
       :id="item.sensorIP"
-      v-observe-visibility="visibilityChanged"
-    >
+      v-observe-visibility="visibilityChanged">
       <div>value</div>
     </info-card>
   </div>
@@ -35,7 +34,7 @@ export default {
       var Host =
         process.env.NODE_ENV === "production"
           ? window.location.protocol + "//" + window.location.host
-          : "https://192.168.0.103:4001";
+          : "http://127.0.0.1:4000";
       var wsRoute = `${Host.replace(
         "http",
         "ws"
@@ -158,5 +157,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
